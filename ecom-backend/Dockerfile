@@ -1,9 +1,11 @@
-# Start your image with a node base image
-FROM java:8
+# Use an official OpenJDK runtime as a base image
+FROM openjdk:17-jdk-alpine
 
-# Copy local directories to the current local directory of our docker image (/app)
-COPY ${WORKSPACE}/ecom-backend/target/ecommerce-0.0.1-SNAPSHOT.jar ecommerce-0.0.1-SNAPSHOT.jar 
+# Set the working directory to /app
+WORKDIR /app
 
+# Copy the packaged JAR file into the container at /app
+COPY ${WORKSPACE}/ecom-backend/target/ecommerce-0.0.1-SNAPSHOT.jar /app/ecommerce.jar
 
-
-ENTRYPOINT ["java","-jar","ecommerce-0.0.1-SNAPSHOT.jar"]
+# Specify the default command to run your application
+CMD ["java", "-jar", "ecommerce.jar"]
